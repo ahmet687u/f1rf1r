@@ -1,0 +1,128 @@
+@import "../../abstracts/variables";
+@import "../../abstracts/res";
+
+$currentPosition: left;
+
+//--- Alert Message
+.alertMessageContainer {
+  position: fixed;
+  z-index: 999999999999;
+  pointer-events: none;
+
+  @each $key, $value in $positions {
+    &.#{$key} {
+      @if $key == "top" {
+        display: flex;
+        flex-direction: column-reverse;
+      }
+
+      @if $key == "left" {
+        div {
+          transform: translateX(-100%);
+
+          &.active {
+            transform: translateX(0%);
+          }
+        }
+      }
+      #{$key}: #{$value}px;
+    }
+  }
+
+  div {
+    position: relative;
+    width: 400px;
+    min-height: 50px;
+    margin: 10px 0;
+    padding: 0 15px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    transition: all .4s;
+    z-index: 99999;
+    opacity: 0;
+    transform: translateX(100%);
+
+    &.active {
+      transform: translateX(0%);
+      opacity: 1;
+    }
+
+    &.hide {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+  }
+
+  .alertError,
+  .alertSuccess {
+    background-repeat: no-repeat;
+    background-size: 25px;
+
+    @each $key, $value in $codeForPositionX {
+      &.#{$key} {
+        background-position: map-get($codeForPositionX, $key, background-position);
+
+        &::before {
+          #{$key}: 0;
+          border-bottom-#{$key}-radius: map-get($codeForPositionX, $key, border-bottom-#{$key}-radius);
+          border-top-#{$key}-radius: map-get($codeForPositionX, $key, border-top-#{$key}-radius);
+        }
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 7px;
+    }
+  }
+
+  .alertError {
+    background-color: $errorColor;
+
+    &::before {
+      background-color: $errorTextColor;
+    }
+
+    p {
+      color: $errorTextColor;
+    }
+  }
+
+  .alertSuccess {
+    background-color: $successColor2;
+
+    &::before {
+      background-color: $successTextColor;
+    }
+
+    p {
+      color: $successTextColor;
+    }
+  }
+
+  p {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    line-height: 24px;
+    padding: 8px 5px;
+  }
+
+  //--- Responsive
+  @include res(500) {
+    div {
+      width: 80%;
+
+      &.active {
+        transform: translateX(10%);
+      }
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+}

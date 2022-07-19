@@ -1,0 +1,198 @@
+@import "../../abstracts/variables";
+@import "../../abstracts/res";
+
+.tori-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 99999;
+  background-color: rgba(0, 0, 0, .4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  color: #95a5a6;
+  transition: all .3s;
+  opacity: 0;
+  pointer-events: none;
+
+  &.show-tori {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .tori-modal {
+    background-color: #fff;
+    width: 576px;
+    border-radius: 6px;
+    transition: all .3s;
+
+    &-header,
+    &-content {
+      border-bottom: 1px solid #d4d4d4;
+      padding: 15px;
+    }
+
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h3 {
+        margin: 0;
+      }
+
+      .tori-hide-btn {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        cursor: pointer;
+        margin: 0 10px;
+        position: relative;
+        transition: all .2s;
+
+        &:hover {
+          transform: rotate(90deg);
+        }
+
+        span {
+          background-color: transparent !important;
+          transform: translateY(-2px);
+
+          &,
+          &::before,
+          &::after {
+            display: inline-block;
+            content: '';
+            height: 3px;
+            width: 100%;
+            background-color: #000;
+            border-radius: 8px;
+          }
+
+          &::before,
+          &::after {
+            position: absolute;
+          }
+
+          &::before {
+            transform: rotate(45deg);
+            bottom: 0;
+          }
+
+          &::after {
+            transform: rotate(-45deg);
+            bottom: 0;
+          }
+        }
+      }
+    }
+
+    &-content {
+      line-height: 30px;
+    }
+
+    &-content,
+    &-buttons {
+      font-size: 15px;
+    }
+
+    &-buttons {
+      margin: 10px 0;
+      text-align: right;
+      padding: 10px;
+
+      button {
+        position: relative;
+        border: none;
+        outline: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        min-width: 80px;
+        cursor: pointer;
+        margin: 0 5px;
+        z-index: 1;
+        transition: all .2s;
+
+        &:hover {
+          transform: translateY(-5px);
+
+          &::before,
+          &::after {
+            opacity: 1;
+          }
+        }
+
+        &::before,
+        &::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: inherit;
+          z-index: -1;
+          opacity: 0;
+          pointer-events: none;
+          transition: all .2s;
+        }
+
+        &::before {
+          bottom: -5px;
+          left: 5px;
+        }
+
+        &::after {
+          bottom: -10px;
+          left: 10px;
+        }
+
+        &.success {
+          color: $successTextColor;
+          background-color: $successColor2;
+
+          &::before,
+          &::after {
+            background-color: rgba(194, 240, 194, .4);
+          }
+        }
+
+        &.error {
+          color: $errorTextColor;
+          background-color: $errorColor;
+
+          &::before,
+          &::after {
+            background-color: rgba(255, 204, 224, .4);
+          }
+        }
+      }
+    }
+  }
+
+  //--- Responsive
+  @include res(600) {
+    .tori-modal {
+      width: 95%;
+
+      &-header,
+      &-content {
+        padding: 10px;
+      }
+
+      &-header {
+        h3 {
+          font-size: 18px;
+        }
+      }
+
+      &-content {
+        line-height: 27px;
+      }
+    }
+  }
+}

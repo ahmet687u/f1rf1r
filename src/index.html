@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>F1RF1R</title>
+</head>
+
+<body>
+
+  <button class="f1rf1r-error">Error</button>
+  <button class="f1rf1r-success">Success</button>
+  <button class="f1rf1r-modal">Default Modal</button>
+
+  <script>
+    window.onload = () => {
+      const {
+        Notification,
+        Modal
+      } = f1rf1r;
+
+      const fırfır = new Notification();
+      const modal = new Modal();
+
+      fırfır.options = { duration: 60000 }
+
+      document.querySelector(".f1rf1r-error").addEventListener("click", () => {
+        fırfır.error("f1rf1r error deneme bildirimi. f1rf1r error deneme bildirimi")
+      })
+
+      document.querySelector(".f1rf1r-success").addEventListener("click", () => {
+        for (let i = 0; i < 5; i++) {
+          fırfır.success("f1rf1r success deneme bildirimi. f1rf1r success deneme bildirimi", {
+            duration: 3000,
+            delay: i * 0.1
+          })
+        }
+      })
+
+      document.querySelector(".f1rf1r-modal").addEventListener("click", () => {
+        modal.defaultModal({
+          msg: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat aliquam animi excepturi veritatis magnam repudiandae",
+          header: {
+            showHeader: true,
+            text: "MODAL HEADER FOR WEBPACK AND REACT"
+          },
+          buttons: {
+            showButton: true,
+            success: () => console.log("success button callback function"),
+            error: () => console.log("Error button callback function")
+          },
+        })
+      })
+    }
+  </script>
+
+</body>
+
+</html>

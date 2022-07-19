@@ -1,0 +1,28 @@
+//--- Yazı ve arka plan renkleri
+$errorColor:  #ffcce0;
+$errorTextColor: #990513;
+$successColor2: #c2f0c2;
+$successTextColor: #106328;
+
+//--- Map-get variables
+$positions: (
+  "bottom": 10,
+  "top": 10,
+  "left": 10,
+  "right": 10
+);
+
+$codeForPositionX: (
+  "left": (
+    "background-position": 15px center,
+    "border-bottom-left-radius": 6px,
+    "border-top-left-radius": 6px,
+    "margin-left": 35px
+  ),
+  "right": (
+    "background-position": 95% center,
+    "border-bottom-right-radius": 6px,
+    "border-top-right-radius": 6px,
+    "margin-right": 35px
+  )
+)
