@@ -7,32 +7,6 @@ Fırfır basit bir şekilde bildiriim mesajları ve modallar oluşturmanızı sa
 ## Kullanım
 Eğer modül bazlı bir projede kullanıyorsanız ilk önce 
 
-```
-npm i f1rf1r
-```
-diyerek kütüphaneyi npm aracılığıyla yüklememiz gerek.
-
-Ardından index js dosyasında cssi import etmek için aşağıdaki kodu eklemeniz gerekir
-
-```
-import 'f1rf1r/dist/css/fırfır.min.css'
-```
-
-```
-import { Notification, Modal } from 'f1rf1r'
-const fırfır = new Notification()
-```
-ardından bu şekilde import ederek fırfır 'ı kullanılabilir hale getirebilirsiniz 
-
-<hr />
-
-Eğer normal bir projede kullanıcaksanız
-
-```
- const { Notification, Modal } = fırfır;
- const fırfır = new Modal()
-```
-diyerek f1rf1r metodlarına ulaşabilirsiniz
 
 ## Notification
 ``` 
