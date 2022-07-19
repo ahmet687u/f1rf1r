@@ -3,11 +3,6 @@
 ## İşlevi
 Fırfır basit bir şekilde bildiriim mesajları ve modallar oluşturmanızı sağlayan bir javascript kütüphanesidir
 
-
-## Kullanım
-Eğer modül bazlı bir projede kullanıyorsanız ilk önce 
-
-
 ## Notification
 ``` 
 fırfır.success("f1rf1r success mesajı deneme mesajı", {
