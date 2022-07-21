@@ -1,5 +1,5 @@
-@import "../../abstracts/variables";
-@import "../../abstracts/res";
+@use "../../abstracts/variables" as *;
+@use "../../abstracts/res" as *;
 
 .tori-modal-container {
   position: fixed;

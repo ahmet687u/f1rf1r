@@ -1,19 +1,15 @@
-import F1rf1r from "./fırfır.js";
+import F1rF1r from "./f1rf1r";
 import "../css/layouts/notification/_notification.scss"
+import { ERROR_ICON, SUCCESS_ICON } from "./utils/icons.js";
+import { createHtmlElement, synthesisText } from "./utils/helper";
 
-export default class Notification extends F1rf1r {
-  /**
-   * @private
-   */
+export default class Notification extends F1rF1r {
   #position;
   #options;
 
   constructor() {
-    super();
+    super()
 
-    this.#options = {}
-
-    this.root = document.querySelector(".alertMessageContainer");
     this.positions = "bottom-right"
     this.#position = "left"
   }
@@ -21,56 +17,55 @@ export default class Notification extends F1rf1r {
   /**
    * @param {String} value
    */
-  set positions(value) {
-    this.root.className = "alertMessageContainer"
-    value.split("-").forEach(c => this.root.classList.add(c))
+   set positions(value) {
+    value.split("-").forEach(c => F1rF1r.root.classList.add(c))
     this.#position = value.split("-")[1] === "left" ? "right" : "left";
-  }
-
-  /**
-   * @param {Object} value
-   */
-  set options(value) {
-    this.#options = value
   }
 
   #init(msg, param) {
     if (!msg || !param) return;
-    const clearText = this.synthesisText(msg);
+    const clearText = synthesisText(msg);
 
-    let alertErrorMessage = this.createHtmlElement("div", this.#position);
-    let msgContent = document.createElement("p");
+    const alertErrorMessage = createHtmlElement("div", this.#position);
+    const msgContent = document.createElement("p");
 
     msgContent.innerText = clearText;
-    alertErrorMessage.style.transitionDelay = `${param.delay}s`
+    alertErrorMessage.style.animationDelay = `${param.delay}s`
     alertErrorMessage.appendChild(msgContent);
 
     return alertErrorMessage;
   }
 
   #finish(box, param) {
-    requestAnimationFrame(() => box.classList.add("active"))
+    requestAnimationFrame(() => box?.classList?.add("active"))
 
-    this.root.appendChild(box)
+    F1rF1r.root?.appendChild(box)
 
-    setTimeout(() => box.classList.add("hide"), param.duration);
-    setTimeout(() => box.remove(), param.duration + 800);
+    setTimeout(() => box?.classList?.add("hide"), param.duration);
+
+    box.onanimationend = ({ animationName }) => {
+      animationName === "show" && param?.animation && box?.classList?.add(param?.animation)
+      animationName === "hide" && box.remove()
+    }
   }
 
   error(msg, param) {
-    const settings = { ...this.#options, ...param }
+    const settings = { ...F1rF1r.notificationOptions, ...param }
     const element = this.#init(msg, settings)
 
-    element.classList.add("alertError")
+    element.classList.add(`${this.globalOptions.initClassName}-error`)
+    element.insertAdjacentHTML("afterbegin", ERROR_ICON)
 
     this.#finish(element, settings)
   }
 
   success(msg, param) {
-    const settings = { ...this.#options, ...param }
-    const element = this.#init(msg, param)
+    const settings = { ...F1rF1r.notificationOptions, ...param }
+    const element = this.#init(msg, settings)
 
-    element.classList.add("alertSuccess")
+    element.classList.add(`${this.globalOptions.initClassName}-success`)
+    element.insertAdjacentHTML("afterbegin", SUCCESS_ICON)
+
     this.#finish(element, settings)
   }
 }

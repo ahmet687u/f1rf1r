@@ -1,39 +1,46 @@
-<!doctype html><html lang="tr"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>F1RF1R</title><script defer="defer" src="js/f%C4%B1rf%C4%B1r.js"></script><link href="css/f%C4%B1rf%C4%B1r.min.css" rel="stylesheet"></head><body><button class="f1rf1r-error">Error</button> <button class="f1rf1r-success">Success</button> <button class="f1rf1r-modal">Default Modal</button><script>window.onload = () => {
-      const {
-        Notification,
-        Modal
-      } = f1rf1r;
+<!doctype html><html lang="tr"><head><meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width,initial-scale=1"/><script>console.log(f1rf1r);</script><title>F1RF1R</title><script defer="defer" src="js/f%C4%B1rf%C4%B1r.js"></script><link href="css/f%C4%B1rf%C4%B1r.min.css" rel="stylesheet"></head><body><button class="f1rf1r-error">Error</button> <button class="f1rf1r-success">Success</button> <button class="f1rf1r-modal">Default Modal</button><script>//console.log(f1rf1r);
 
-      const fırfır = new Notification();
-      const modal = new Modal();
 
-      fırfır.options = { duration: 60000 }
+    window.onload = () => {
+      // const { Notification, Modal } = f1rf1r;
 
-      document.querySelector(".f1rf1r-error").addEventListener("click", () => {
-        fırfır.error("f1rf1r error deneme bildirimi. f1rf1r error deneme bildirimi")
-      })
+      // const a = new Notification();
+      // const modal = new Modal();
 
-      document.querySelector(".f1rf1r-success").addEventListener("click", () => {
-        for (let i = 0; i < 5; i++) {
-          fırfır.success("f1rf1r success deneme bildirimi. f1rf1r success deneme bildirimi", {
-            duration: 3000,
-            delay: i * 0.1
-          })
-        }
-      })
+      // a.options = { duration: 40000 };
 
-      document.querySelector(".f1rf1r-modal").addEventListener("click", () => {
-        modal.defaultModal({
-          msg: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat aliquam animi excepturi veritatis magnam repudiandae",
-          header: {
-            showHeader: true,
-            text: "MODAL HEADER FOR WEBPACK AND REACT"
-          },
-          buttons: {
-            showButton: true,
-            success: () => console.log("success button callback function"),
-            error: () => console.log("Error button callback function")
-          },
-        })
-      })
+      // document.querySelector(".f1rf1r-error").addEventListener("click", () => {
+      //   a.error(
+      //     "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus, voluptatem.",
+      //     { animation: "wiggle" }
+      //   );
+      // });
+
+      // document.querySelector(".f1rf1r-success").addEventListener("click", () => {
+      //   for (let i = 0; i < 5; i++) {
+      //     a.success(
+      //       "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus, voluptatem.",
+      //       {
+      //         duration: 7000,
+      //         delay: i * 0.1,
+      //       }
+      //     );
+      //   }
+      // });
+
+      // document.querySelector(".f1rf1r-modal").addEventListener("click", () => {
+      //   modal.defaultModal({
+      //     msg: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat aliquam animi excepturi veritatis magnam repudiandae",
+      //     header: {
+      //       showHeader: true,
+      //       text: "MODAL HEADER FOR WEBPACK AND REACT",
+      //     },
+      //     buttons: {
+      //       showButton: true,
+      //       success: () => console.log("success button callback function"),
+      //       error: () => console.log("Error button callback function"),
+      //     },
+      //   });
+      // });
+    
     }</script></body></html>

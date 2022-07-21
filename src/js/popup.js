@@ -1,14 +1,12 @@
-import F1rf1r from "./fırfır";
 import "../css/layouts/modal/_modal.scss"
 
-export default class Modal extends F1rf1r {
+export default class Modal {
   /**
    * @private
    */
   #defaultModalSchema;
 
   constructor() {
-    super();
     //--- variable schema
     this.#defaultModalSchema = {
       msg: {

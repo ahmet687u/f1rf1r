@@ -3,6 +3,7 @@ declare module "f1rf1r";
 interface NotificationSettings {
   duration?: number;
   delay?: number;
+  animation?: "shake" | "wiggle";
 }
 
 interface ModalSettings {
@@ -19,25 +20,29 @@ interface ModalSettings {
 }
 
 declare namespace f1rf1r {
+  class F1rf1r {
+    init(): void;
+
+    /**
+     * Bildirim mesajları için default ayarlar tanımlamak için kullanılır
+     *
+     * @example
+     * instance.notificationSettings = { duration: 3000 }
+     */
+    set notificationSettings(params: NotificationSettings);
+  }
+
   /**
    * -- Notification --
    * @class
    */
-  declare class Notification {
+  class Notification {
     /**
      * Bildirim mesajlarının ekrandaki konumunu belirler
-     * 
+     *
      * @example instance.positions = "bottom-right"
      */
-    positions: string;
-
-    /**
-     * Bildirim mesajları için default ayarlar tanımlamak için kullanılır
-     * 
-     * @example
-     * instance.options = { duration: 3000 }
-     */
-    options: object;
+    set positions(params: "bootom-right" | "bottom-left" | "top-right" | "top-left");
 
     /**
      * -- error --
@@ -60,7 +65,7 @@ declare namespace f1rf1r {
    * -- Modal --
    * @class
    */
-  declare class Modal {
+  class Modal {
     /**
      * -- defaultModal --
      * @example
