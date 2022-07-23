@@ -1,0 +1,46 @@
+@use "../../abstracts/variables" as *;
+
+$radius: 5px;
+
+%create_f1rf1r {
+  position: relative;
+  width: var(--notification-width);
+  min-height: 50px;
+  margin: 10px 0;
+  padding: 0 10px;
+  border-radius: $radius;
+  display: flex;
+  align-items: center;
+  z-index: 99999;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 7px;
+    border-top-left-radius: $radius;
+    border-bottom-left-radius: $radius;
+  }
+
+  svg {
+    flex-shrink: 0;
+    margin: 0 10px;
+    width: 1.5em;
+  }
+}
+
+@mixin create_f1rf1r_type($type) {
+  background-color: map-get($alerts, $type, background-color);
+  color: map-get($alerts, $type, color);
+
+  svg {
+    fill: map-get($alerts, $type, color);
+  }
+
+  &::before {
+    background-color: map-get($alerts, $type, color);
+  }
+  @content;
+}

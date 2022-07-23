@@ -1,102 +1,75 @@
+import F1rF1r from "./f1rf1r";
 import "../css/layouts/modal/_modal.scss"
+import { EXIT_ICON } from "./utils/icons";
+import { synthesisText, createHtmlElement } from "./utils/helper";
 
-export default class Modal {
-  /**
-   * @private
-   */
-  #defaultModalSchema;
-
+export default class Modal extends F1rF1r {
   constructor() {
-    //--- variable schema
-    this.#defaultModalSchema = {
-      msg: {
-        required: true,
-        validation: value => typeof value === "string",
-        invalidError: "'msg' string bir değer olmalı. Lütfen özelliği doğru girdiğinizden emin olun"
-      },
-      header: {
-        required: true,
-        validation: value => {
-          let mistakes = [];
-          mistakes.push(typeof value === "object")
-          Object.keys(value).map(o => mistakes.push(["showHeader", "text"].includes(o) && typeof value.showHeader === "boolean" && typeof value.text === "string"))
-          return mistakes.every(c => c)
-        },
-        invalidError: "'header' object bir değer olmalı. Lütfen özelliği doğru girdiğinizden emin olun. Örnek header: {showHeader: boolean, text: 'string'}"
-      },
-      buttons: {
-        required: true,
-        validation: value => {
-          let mistakes = [];
-          mistakes.push(typeof value === "object")
-          Object.keys(value).map(o => mistakes.push(["showButton", "success", "error"].includes(o) && typeof value.showButton === "boolean"))
-          
-          if(value.error) {
-            mistakes.push(typeof value.error === "function")
-          }
-          if(value.success) {
-            mistakes.push(typeof value.success === "function")
-          }
-          return mistakes.every(c => c)
-        },
-        invalidError: "'buttons' bir object olmalı. Lütfen özelliği doğru girdiğinizden emin olun. Örnek buttons: {showButton: boolean, success: function(), error: function()}"
-      },
-    };
+    super()
   }
 
-  /**
-   *
-   * @param {{header: object, msg: string, success: Function, error: Function}} param0
-   * @returns
-   */
-  defaultModal({msg, header: { showHeader, text }, buttons: { success, error, showButton } }) {
-    this.objectValidate(arguments[0], this.#defaultModalSchema).forEach((error) => console.error(error.message));
+  #prepare(params) {
+    const fırfırModal = createHtmlElement("div", `${this.globalOptions.initClassName}-modal`);
+    const modalExit = createHtmlElement("div", `${this.globalOptions.initClassName}-modal-exit`)
+    const modalContent = createHtmlElement("div", `${this.globalOptions.initClassName}-modal-content`)
+    const modalHeader = createHtmlElement("div", `${this.globalOptions.initClassName}-modal-header`)
+    const modalButton = createHtmlElement("div", `${this.globalOptions.initClassName}-modal-buttons`)
 
-    if (this.objectValidate(arguments[0], this.#defaultModalSchema).length > 0) return;
+    modalExit.innerHTML = EXIT_ICON
 
-    document.querySelectorAll(".tori-modal-container").forEach(item => item.remove())
-    
-    //--- Create html element
-    const modalContainer = this.createHtmlElement("div", "tori-modal-container");
-    const toriModal = this.createHtmlElement("div", "tori-modal");
-    const toriHeader = this.createHtmlElement("div", "tori-modal-header");
-    const toriContent = this.createHtmlElement("div", "tori-modal-content");
-    const toriButtons = this.createHtmlElement("div", "tori-modal-buttons");
-    const toriHeaderText = this.createHtmlElement("h3");
-    const toriHeaderHide = this.createHtmlElement("div", "tori-hide-btn");
-    const toriSuccessButton = this.createHtmlElement("button", "success");
-    const toriErrorButton = this.createHtmlElement("button", "error");
-    const toriSpan1 = this.createHtmlElement("span")
-    const toriSpan2 = this.createHtmlElement("span")
-
-    //--- Binding data
-    toriHeaderText.innerHTML = this.synthesisText(text);
-    toriContent.innerHTML = this.synthesisText(msg);
-    toriErrorButton.innerHTML = "Hayır";
-    toriSuccessButton.innerHTML = "Evet";
-
-    //--- Add to the document
-    [toriHeaderText, toriHeaderHide].forEach((c) => toriHeader.appendChild(c));
-    [toriSpan1].forEach(c => toriHeaderHide.appendChild(c));
-    [toriHeader, toriContent, toriButtons].forEach((c) => toriModal.appendChild(c));
-    [toriSuccessButton, toriErrorButton].forEach((c) => toriButtons.appendChild(c));
-    modalContainer.appendChild(toriModal);
-    document.body.appendChild(modalContainer);
-    setTimeout(() => modalContainer.classList.add("show-tori"), 100);
-    document.body.appendChild(modalContainer);
-
-    //--- Helper function
-    const hideModal = () => {
-      modalContainer.classList.remove("show-tori")
+    if (params?.header) {
+      const h2 = createHtmlElement("h2", "title")
+      h2.textContent = params?.header
+      modalHeader.appendChild(h2)
     }
 
-    //--- Show and hide elements
-    toriHeader.style.display = !showHeader && 'none'
-    toriButtons.style.display = !showButton && 'none'
+    if (params?.buttons) {
+      const buttonError = createHtmlElement("button", "error")
+      const buttonSuccess = createHtmlElement("button", "success")
+
+      [buttonError, buttonSuccess].forEach(item => modalButton.appendChild(item))
+    }
+
+    modalButton.style.display = !params.buttons && "none";
+
+    [modalHeader, modalContent, modalExit, modalButton].forEach(item => fırfırModal.appendChild(item))
+
+    F1rF1r.modalRoot?.classList.add("show")
+    fırfırModal?.classList?.add("show")
 
     //--- Events
-    success && toriSuccessButton.addEventListener("click", success);
-    error && toriErrorButton.addEventListener("click", error);
-    [toriErrorButton, toriSuccessButton, toriHeaderHide].forEach(b => b.addEventListener("click", hideModal))
+    modalExit.addEventListener("click", () => F1rF1r.modalRoot?.querySelector(`.${this.globalOptions.initClassName}-modal`)?.classList.add("hide"))
+    fırfırModal.onanimationend = ({ animationName }) => {
+      if (animationName === "hideModal") {
+        fırfırModal.remove()
+        F1rF1r.modalRoot.classList.remove("show")
+      }
+    }
+
+    return {
+      content: modalContent,
+      modalBox: fırfırModal
+    }
+  }
+
+  #finish(modal) {
+    F1rF1r.modalRoot.appendChild(modal)
+  }
+
+  modal(params) {
+    const { content, modalBox } = this.#prepare(params)
+    const text = createHtmlElement("p", "text")
+
+    text.textContent = synthesisText(params?.msg)
+    content.appendChild(text)
+
+    this.#finish(modalBox)
+  }
+
+  formModal(params) {
+    const { content, modal } = this.#prepare(params)
+    console.log("haloo !...");
+
+    this.#finish(modal)
   }
 }

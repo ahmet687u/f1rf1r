@@ -1,3 +1,9 @@
+/**
+ * 
+ * @param {string} el 
+ * @param {string} cls 
+ * @returns {HTMLElement}
+ */
 export const createHtmlElement = (el, cls) => {
   let htmlElement = document.createElement(el);
   htmlElement.className = cls && cls;

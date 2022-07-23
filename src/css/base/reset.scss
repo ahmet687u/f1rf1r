@@ -1,0 +1,20 @@
+@use "../abstracts/res" as *;
+
+:root {
+  --notification-width: 400px;
+  --fırfır-font-size: 16px;
+  --modal-text-color1: #7c99d6;
+  --modal-text-color2: #9bb0df;
+  --modal-red-color: #ff536d;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@include res(600) {
+  :root {
+    --notification-width: 290px;
+    --fırfır-font-size: 15px;
+  }
+}

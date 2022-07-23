@@ -1,143 +1,43 @@
 @use "../../abstracts/variables" as *;
 @use "../../abstracts/res" as *;
 @use "../../base/animate.scss" as *;
+@use "./alerts.scss" as *;
+@use "../../abstracts/helper.scss" as *;
 
-$currentPosition: left;
+$type_list: (error, success, info, warning);
+$animate_list: (show, fadeIn, fadeOut, hide);
+$position_list: ("top-right", "top-left", "bottom-right", "bottom-left");
 
-//--- Alert Message
-.f1rf1r-container {
+.f1rf1r-notification-container {
   position: fixed;
   z-index: 999999999999;
   pointer-events: none;
+  font-family: "Open-Sans", sans-serif;
+  font-size: var(--fırfır-font-size);
 
+  //--- Mesajların seçili pozisyona göre ekrandaki konumlarını belirleyecek classları oluşturuyoruz
   @each $key, $value in $positions {
-    &.#{$key} {
-      @if $key == "top" {
-        display: flex;
-        flex-direction: column-reverse;
-      }
-
-      @if $key == "left" {
-        div {
-          transform: translateX(-100%);
-
-          &.active {
-            transform: translateX(0%);
-          }
-        }
-      }
-      #{$key}: #{$value}px;
-    }
-  }
-
-  div {
-    position: relative;
-    width: 400px;
-    min-height: 50px;
-    margin: 10px 0;
-    padding: 0 15px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    z-index: 99999;
-
-    &.active {
-      animation: show 1s;
-    }
-
-    &.shake {
-      animation: shake 300ms;
-    }
-
-    &.wiggle {
-      animation: wiggle 2s linear;
-    }
-
-    &.hide {
-      animation: hide 1s;
-    }
-  }
-
-  .fırfır-error,
-  .fırfır-success {
-    @each $key, $value in $codeForPositionX {
-      &.#{$key} {
-        &::before {
-          #{$key}: 0;
-          border-bottom-#{$key}-radius: map-get($codeForPositionX, $key, border-bottom-#{$key}-radius);
-          border-top-#{$key}-radius: map-get($codeForPositionX, $key, border-top-#{$key}-radius);
-        }
+    &[data-fırfır-item-direction="#{$key}"] {
+      @for $index from 1 through 2 {
+        #{nth(str-split($key, "-"), $index)}: map-get($positions, $key, nth(str-split($key, "-"), $index));
       }
     }
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: 7px;
-    }
-
-    p {
-      margin-left: 5px;
-    }
-
-    svg {
-      flex-shrink: 0;
-    }
   }
 
-  .fırfır-error {
-    background-color: $errorColor;
+  [class^="fırfır-"] {
+    @extend %create_f1rf1r;
 
-    &::before {
-      background-color: $errorTextColor;
-    }
-
-    svg {
-      fill: $errorTextColor;
-    }
-
-    p {
-      color: $errorTextColor;
-    }
-  }
-
-  .fırfır-success {
-    background-color: $successColor2;
-
-    &::before {
-      background-color: $successTextColor;
-    }
-
-    svg {
-      fill: $successTextColor;
-    }
-
-    p {
-      color: $successTextColor;
-    }
-  }
-
-  p {
-    font-family: "Poppins", sans-serif;
-    margin: 0;
-    line-height: 24px;
-    padding: 8px 5px;
-  }
-
-  //--- Responsive
-  @include res(500) {
-    div {
-      width: 80%;
-
-      &.active {
-        transform: translateX(10%);
+    @for $i from 1 through length($animate_list) {
+      &.#{nth($animate_list, $i)} {
+        animation-name: #{nth($animate_list, $i)};
       }
     }
+  }
 
-    p {
-      font-size: 14px;
+  //--- Farklı tiplerde olacak olan mesajları oluşturuyoruz
+  @for $j from 1 through length($type_list) {
+    .fırfır-#{nth($type_list, $j)} {
+      @include create_f1rf1r_type(nth($type_list, $j));
     }
   }
 }

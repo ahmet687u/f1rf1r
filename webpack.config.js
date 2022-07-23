@@ -8,7 +8,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name].js",
+    filename: "[name].min.js",
     library: {
       name: "f1rf1r",
       type: "umd",
