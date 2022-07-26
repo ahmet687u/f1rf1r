@@ -76,6 +76,7 @@ export default class Modal extends F1rF1r {
 
   #closeModal(modal) {
     modal.classList.add("hide")
+    this.#state = {}
   }
 
   get data() {
