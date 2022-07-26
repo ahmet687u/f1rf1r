@@ -29,8 +29,7 @@
     color: #787b87;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     opacity: 0;
-    transition: all 0.2s;
-    transition-delay: .2s;
+    transition-delay: .3s;
 
     &.show {
       opacity: 1;
@@ -102,6 +101,7 @@
         min-width: 120px;
         border-radius: 7px;
         cursor: pointer;
+        font-size: 1rem;
 
         &.success {
           background-color: #8430d5;

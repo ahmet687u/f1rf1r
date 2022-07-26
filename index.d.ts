@@ -9,30 +9,36 @@ interface NotificationSettings {
   };
 }
 
+interface Input extends HTMLInputElement {
+  label: string;
+}
+
+interface Button {
+  text?: string;
+  func?: Function;
+}
+
 interface DefaultModalSettings {
   msg: string;
   header: string;
   buttons: {
-    success: Function;
-    error: Function;
+    success: Button;
+    error: Button;
   };
-}
-
-interface Input {
-  label: string; 
-  name: string; 
-  placeholder: string
 }
 
 interface FormModalSettings {
   inputs: Array<Input>;
-  header: {
-    text: string;
-  };
+  header: string;
   buttons: {
-    success: Function;
-    error: Function;
+    success: Button;
+    error: Button;
   };
+}
+
+interface Data {
+  name: string;
+  value: string;
 }
 
 declare namespace f1rf1r {
@@ -59,13 +65,7 @@ declare namespace f1rf1r {
      * @example f1rf1r.positions = "top-center"
      */
     set positions(
-      params:
-        | "bootom-right"
-        | "bottom-left"
-        | "top-right"
-        | "top-left"
-        | "top-center"
-        | "bottom-center"
+      params: "bottom-right" | "bottom-left" | "top-right" | "top-left"
     );
 
     /**
@@ -115,22 +115,67 @@ declare namespace f1rf1r {
    */
   class Modal {
     /**
-     * -- defaultModal --
+     * Modal içindeki inputların değerlerini almak için kullanılır
+     * 
      * @example
+     * const formData = modal.data
+     */
+    get data(): Array<Data>;
+
+    /**
+     * -- modal --
      *
-     * modal.defaultModal({
-     *  msg: "example f1rf1r modal text",
-     *  header: {
-     *    text: "EXAMPLE f1rf1r MODAL HEADER TITLE"
-     *   },
+     * Default modallar oluşturmak için kullanılır
+     *
+     * @example
+     * modal.modal({
+     *   msg: "Lorem, ipsum dolor sit amet consectetur adipisicing elit",
+     *   header: "My Header",
      *   buttons: {
-     *    success: () => alert("example f1rf1r modal success function"),
-     *    error: () => alert("example f1rf1r modal error function")
+     *     success: {
+     *       text: "Okke",
+     *       func: () => console.log("fırfır modal success function")
+     *     }
      *   }
      * })
      */
     modal(params: DefaultModalSettings): void;
 
+    /**
+     *
+     * -- formModal --
+     *
+     * Form modalları oluşturmak için kullanılır
+     *
+     * @example
+     * modal.formModal({
+     *   header: "Form Gönder",
+     *   inputs: [
+     *     {
+     *       label: "Kullanıcı Adı Giriniz",
+     *       placeholder: "Kullanıcı adı giriniz",
+     *       name: "username"
+     *     },
+     *     {
+     *       label: "Email Giriniz",
+     *       placeholder: "Mail giriniz",
+     *       name: "mail"
+     *     },
+     *     {
+     *       label: "Şifre giriniz",
+     *       required: true,
+     *       placeholder: "Şifre Giriniz",
+     *       type: "password"
+     *     }
+     *   ],
+     *   buttons: {
+     *     success: {
+     *       text: "Gönder",
+     *       func: value => console.log(`Value = ${value}`)
+     *     },
+     *   }
+     * })
+     */
     formModal(params: FormModalSettings): void;
   }
 }

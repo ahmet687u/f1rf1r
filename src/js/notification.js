@@ -29,6 +29,9 @@ export default class Notification extends F1rF1r {
     }
 
     document.body.setAttribute(`data-${this.globalOptions.initClassName}-direction`, direction)
+
+    const cssRoot = document.querySelector(":root")
+    cssRoot.style.setProperty("--fırfır-hide-translate", direction === "left" ? "100%" : "-100%")
   }
 
   #init(msg, param) {

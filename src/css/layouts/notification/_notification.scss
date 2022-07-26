@@ -26,7 +26,7 @@ $position_list: ("top-right", "top-left", "bottom-right", "bottom-left");
 
   [class^="fırfır-"] {
     @extend %create_f1rf1r;
-
+    
     @for $i from 1 through length($animate_list) {
       &.#{nth($animate_list, $i)} {
         animation-name: #{nth($animate_list, $i)};
@@ -38,6 +38,28 @@ $position_list: ("top-right", "top-left", "bottom-right", "bottom-left");
   @for $j from 1 through length($type_list) {
     .fırfır-#{nth($type_list, $j)} {
       @include create_f1rf1r_type(nth($type_list, $j));
+    }
+  }
+
+  [data-fırfır-direction="right"] {
+    [class^="fırfır-"] {
+      justify-content: flex-end;
+  
+      svg {
+        order: 1;
+      }
+  
+      p {
+        flex: 1;
+      }
+  
+      &::before {
+        left: auto;
+        right: 0;
+        border-radius: 0;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
     }
   }
 }

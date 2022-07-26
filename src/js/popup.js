@@ -4,8 +4,17 @@ import { EXIT_ICON } from "./utils/icons";
 import { synthesisText, createHtmlElement } from "./utils/helper";
 
 export default class Modal extends F1rF1r {
+  #state;
+
   constructor() {
     super()
+
+    this.#state = {}
+
+    this.buttonTextDefault = {
+      error: "Hayır",
+      success: "Evet"
+    }
   }
 
   #prepare(params) {
@@ -24,21 +33,30 @@ export default class Modal extends F1rF1r {
     }
 
     if (params?.buttons) {
-      const buttonError = createHtmlElement("button", "error")
-      const buttonSuccess = createHtmlElement("button", "success")
+      const error = createHtmlElement("button", "error")
+      const success = createHtmlElement("button", "success");
 
-      [buttonError, buttonSuccess].forEach(item => modalButton.appendChild(item))
+      for (const iterator of [error, success]) {
+        iterator.textContent = params.buttons[iterator.className]?.text || this.buttonTextDefault[iterator.className]
+        iterator.addEventListener("click", () => {
+          params.buttons[iterator.className]?.func()
+          this.#closeModal(fırfırModal)
+        })
+        iterator.style.display = !params.buttons[iterator.className] && "none"
+      }
+
+      [error, success].forEach(item => modalButton.appendChild(item))
     }
 
     modalButton.style.display = !params.buttons && "none";
 
-    [modalHeader, modalContent, modalExit, modalButton].forEach(item => fırfırModal.appendChild(item))
+    [modalHeader, modalContent, modalExit, modalButton].forEach(item => item && fırfırModal.appendChild(item))
 
     F1rF1r.modalRoot?.classList.add("show")
     fırfırModal?.classList?.add("show")
 
     //--- Events
-    modalExit.addEventListener("click", () => F1rF1r.modalRoot?.querySelector(`.${this.globalOptions.initClassName}-modal`)?.classList.add("hide"))
+    modalExit.addEventListener("click", () => this.#closeModal(fırfırModal))
     fırfırModal.onanimationend = ({ animationName }) => {
       if (animationName === "hideModal") {
         fırfırModal.remove()
@@ -56,20 +74,56 @@ export default class Modal extends F1rF1r {
     F1rF1r.modalRoot.appendChild(modal)
   }
 
+  #closeModal(modal) {
+    modal.classList.add("hide")
+  }
+
+  get data() {
+    return this.#state
+  }
+
   modal(params) {
-    const { content, modalBox } = this.#prepare(params)
+    const { content, modalBox } = this.#prepare({ ...F1rF1r.modalOptions, ...params })
     const text = createHtmlElement("p", "text")
 
-    text.textContent = synthesisText(params?.msg)
+    text.textContent = params?.msg ? synthesisText(params?.msg) : ""
     content.appendChild(text)
 
     this.#finish(modalBox)
   }
 
   formModal(params) {
-    const { content, modal } = this.#prepare(params)
-    console.log("haloo !...");
+    const settings = { ...F1rF1r.modalOptions, ...params }
+    const { content, modalBox } = this.#prepare(settings)
+    const elements = {
+      inputs: {},
+      labels: {},
+      fields: {}
+    }
 
-    this.#finish(modal)
+    for (let i = 0; i < settings?.inputs?.length; i++) {
+      elements.inputs[`input ${i}`] = createHtmlElement("input", `${this.globalOptions.initClassName}-input-${i}`)
+      elements.labels[`label ${i}`] = createHtmlElement("label", `${this.globalOptions.initClassName}-label-${i}`)
+      elements.fields[`field ${i}`] = createHtmlElement("div", `${this.globalOptions.initClassName}-form-field-${i}`)
+
+      for (const [key, value] of Object.entries(settings?.inputs[i])) {
+        if (key === "label") {
+          elements.labels[`label ${i}`].textContent = value
+          continue;
+        }
+        elements.inputs[`input ${i}`].setAttribute(key, value)
+      }
+
+      [elements.labels[`label ${i}`], elements.inputs[`input ${i}`]].forEach(item => elements.fields[`field ${i}`].appendChild(item))
+      content.appendChild(elements.fields[`field ${i}`])
+    }
+
+    const inputs = [...content.querySelectorAll("input")]
+
+    for (const [idx ,iterator] of inputs.entries()) {
+      iterator.addEventListener("input", ({ target }) => this.#state = { ...this.#state, [target.name || `value${idx}`]: target.value })
+    }
+
+    this.#finish(modalBox)
   }
 }
