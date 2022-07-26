@@ -9,6 +9,22 @@ interface NotificationSettings {
   };
 }
 
+interface ModalSettings {
+  header: string;
+  buttons: {
+    success: Button;
+    error: Button;
+  };
+}
+
+interface DefaultModalSettings extends ModalSettings {
+  msg: string;
+}
+
+interface FormModalSettings extends ModalSettings {
+  inputs: Array<Input>;
+}
+
 interface Input extends HTMLInputElement {
   label: string;
 }
@@ -16,24 +32,6 @@ interface Input extends HTMLInputElement {
 interface Button {
   text?: string;
   func?: Function;
-}
-
-interface DefaultModalSettings {
-  msg: string;
-  header: string;
-  buttons: {
-    success: Button;
-    error: Button;
-  };
-}
-
-interface FormModalSettings {
-  inputs: Array<Input>;
-  header: string;
-  buttons: {
-    success: Button;
-    error: Button;
-  };
 }
 
 interface Data {
@@ -52,6 +50,14 @@ declare namespace f1rf1r {
      * f1rf1r.notificationSettings = { duration: 3000 }
      */
     set notificationSettings(params: NotificationSettings);
+
+    /**
+     * Modallar için default ayarlar tanımlamak için kullanılır
+     *
+     * @example
+     * f1rf1r.modalSettings = { header: "F1rf1r Default Header" }
+     */
+    set modalSettings(params: ModalSettings);
   }
 
   /**
@@ -116,7 +122,7 @@ declare namespace f1rf1r {
   class Modal {
     /**
      * Modal içindeki inputların değerlerini almak için kullanılır
-     * 
+     *
      * @example
      * const formData = modal.data
      */

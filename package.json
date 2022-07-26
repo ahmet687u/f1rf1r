@@ -16,7 +16,11 @@
     "message",
     "error",
     "success",
-    "toast"
+    "info",
+    "warning",
+    "toast",
+    "form",
+    "popup"
   ],
   "author": "Ahmet Bıyıklı",
   "license": "ISC",

@@ -39,7 +39,7 @@ export default class Modal extends F1rF1r {
       for (const iterator of [error, success]) {
         iterator.textContent = params.buttons[iterator.className]?.text || this.buttonTextDefault[iterator.className]
         iterator.addEventListener("click", () => {
-          params.buttons[iterator.className]?.func()
+          params.buttons[iterator.className]?.func && typeof params.buttons[iterator.className]?.func === "function" && params.buttons[iterator.className]?.func()
           this.#closeModal(fırfırModal)
         })
         iterator.style.display = !params.buttons[iterator.className] && "none"
@@ -84,10 +84,11 @@ export default class Modal extends F1rF1r {
   }
 
   modal(params) {
-    const { content, modalBox } = this.#prepare({ ...F1rF1r.modalOptions, ...params })
+    const settings = { ...F1rF1r.modalOptions, ...params }
+    const { content, modalBox } = this.#prepare(settings)
     const text = createHtmlElement("p", "text")
 
-    text.textContent = params?.msg ? synthesisText(params?.msg) : ""
+    text.textContent = settings?.msg ? synthesisText(settings?.msg) : ""
     content.appendChild(text)
 
     this.#finish(modalBox)
