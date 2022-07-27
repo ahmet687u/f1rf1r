@@ -177,7 +177,7 @@ declare namespace f1rf1r {
      *   buttons: {
      *     success: {
      *       text: "Gönder",
-     *       func: value => console.log(`Value = ${value}`)
+     *       func: () => console.log(modal.data)
      *     },
      *   }
      * })
