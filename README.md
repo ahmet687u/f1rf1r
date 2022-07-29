@@ -61,6 +61,7 @@ fırfır.modalSettings = {
 Alabileceği özellikler örnekte gösterilmiştir.
 
 ## (Notification) Kullanımı
+![Resim Yüklenemedi](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
 ```
 import f1rf1r from 'f1rf1r'
 const alert = new f1rf1r.Notification()
