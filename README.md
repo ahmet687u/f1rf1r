@@ -6,6 +6,11 @@ Fırfır bildirim mesajları ve popuplar oluşturmanızı sağlayan bir kütüph
 ## Başlangıç
 
 ```
+npm i f1rf1r
+```
+diyerek yükleyebilirsiniz
+
+```
 import 'f1rf1r/dist/css/fırfır.min.css'
 ```
 İlk önce css dosyasını import etmeliyiz
