@@ -4,6 +4,7 @@
   "description": "Javascript notification library",
   "types": "index.d.ts",
   "main": "dist/js/fırfır.min.js",
+  "homepage": "https://github.com/ahmet687u/f1rf1r",
   "scripts": {
     "dev": "webpack --mode=development",
     "prod": "webpack --mode=production",
