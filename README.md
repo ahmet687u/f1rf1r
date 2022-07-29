@@ -106,6 +106,20 @@ import f1rf1r from 'f1rf1r'
 const modal = new f1rf1r.Modal()
 ```
 Önce bu şekilde tanımlamalıyız. Özellikleri:
+
+* ***data***: Form modaldaki inputların value değerlerini verir. Geri dönen değerler 
+```
+{
+  [input.name]: input.value
+}
+```
+şeklinde bir obje halinde döner. Eğer input için bir name değeri tanımlanmamışsa name değeri yerine random bir değer üretilir mesela:
+```
+{
+  [randomdeğer]: input.value
+}
+```
+
 * ***modal***: Default modallar göstermek için kullanılır
 ```
 modal.modal({
@@ -154,6 +168,7 @@ modal.formModal({
   }
 })
 ```
+Modalın alabileceği özellikler
 * ***header***: Açılan modalın başlık metnini belirler
 * ***msg***: Default modalda gösterilecek olan metni belirler
 * ***buttons***: Modallardaki butonların özelliklerini belirler. 2 tane özelliği vardır. Bunlar: <br />

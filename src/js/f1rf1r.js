@@ -22,7 +22,7 @@ export default class F1rF1r {
     msg: null,
     header: null,
     buttons: null,
-    inputs: []
+    inputs: null
   }
 
   constructor() {
