@@ -29,7 +29,7 @@
     color: #787b87;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     opacity: 0;
-    transition-delay: .3s;
+    transition-delay: 0.3s;
 
     &.show {
       opacity: 1;
@@ -82,6 +82,27 @@
       .text {
         line-height: 28px;
         font-size: var(--fırfır-font-size);
+      }
+
+      [class^="fırfır-form-field-"] {
+        margin: 10px 0;
+
+        input {
+          border: none;
+          outline: none;
+          border-radius: 5px;
+          border: 1.5px solid #b2bec3;
+          padding: 10px 15px;
+          width: 100%;
+          margin: 10px 0;
+          color: #787b87;
+          font-weight: 500;
+          box-sizing: border-box;
+
+          &::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+          }
+        }
       }
     }
 
