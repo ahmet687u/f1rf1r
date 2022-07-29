@@ -61,7 +61,7 @@ fırfır.modalSettings = {
 Alabileceği özellikler örnekte gösterilmiştir.
 
 ## (Notification) Kullanımı
-![Resim Yüklenemedi](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+![Resim Yüklenemedi](https://github.com/ahmet687u/f1rf1r/blob/main/git-images/notification.gif)
 ```
 import f1rf1r from 'f1rf1r'
 const alert = new f1rf1r.Notification()
@@ -102,6 +102,7 @@ alert.error("Fırfır error message", { animate: { speed: 0.4, name: "fadeIn" } 
 ```
 
 ## (Popup) Kullanımı
+![Resim Yüklenemedi](https://github.com/ahmet687u/f1rf1r/blob/main/git-images/modal.gif)
 ```
 import f1rf1r from 'f1rf1r'
 const modal = new f1rf1r.Modal()
